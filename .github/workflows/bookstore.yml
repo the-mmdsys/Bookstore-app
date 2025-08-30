@@ -1,0 +1,33 @@
+name: Python Bookstore Project
+
+on:
+  push:
+    branches:
+      - main  # وقتی تغییرات روی این برنچ زده میشه
+  pull_request:
+    branches:
+      - main  # یا برای pull request ها
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # استفاده از لینوکس برای اجرای گیت‌هاب اکشن
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2  # کد رو از گیت‌هاب می‌گیره
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # یا هر نسخه پایتونی که پروژه نیاز داره
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv  # ایجاد محیط مجازی
+          source venv/bin/activate  # فعال‌سازی محیط مجازی
+          pip install -r requirements.txt  # نصب کتابخانه‌ها
+
+      - name: Run the bookstore application
+        run: |
+          source venv/bin/activate  # فعال‌سازی محیط مجازی
+          python your_main_script.py  # نام فایل اصلی پروژه رو وارد کن (مثلاً `main.py`)
